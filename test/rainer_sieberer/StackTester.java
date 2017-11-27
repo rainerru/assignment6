@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.EmptyStackException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class StackTester {
 
@@ -28,7 +29,7 @@ class StackTester {
         } else
         {
             this.stack = new StackArray<Double>();
-            this.repetition = (int) Math.pow(this.repetition-1,4);
+            this.repetition = (int) Math.pow(this.repetition,4);
             System.out.println("Testing StackArray implementation of the LIFO interface");
         }
 
@@ -56,7 +57,11 @@ class StackTester {
         for ( int i = 0; i < repetition; i ++)
             this.stack.push(new Double(i));
         for ( int i = 0; i < repetition; i ++)
-            System.out.println( this.stack.pop() );
+        {
+            if ( !this.stack.pop().equals(new Double(repetition-1-i)) )
+                fail("output of pop of stack is different than expected!");
+        }
+
     }
 
     @RepeatedTest(6)
